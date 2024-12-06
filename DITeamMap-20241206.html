@@ -1,0 +1,255 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script>
+        L_NO_TOUCH = false;
+        L_DISABLE_3D = false;
+    </script>
+    <style>
+        html, body {width: 100%; height: 100%; margin: 0; padding: 0;}
+        #map {position: absolute; top: 0; bottom: 0; right: 0; left: 0;}
+        div[style*="position:fixed"] { top: 10px !important; left: 10px !important; width: 400px !important;
+            font-family: Arial, sans-serif; /* Set sidebar font to Arial */
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+</head>
+<body>
+    <div style='position:fixed; top:10px; left:10px; z-index:1000; background:white; padding:10px; max-height:80%; overflow:auto; border:2px solid black; width:300px;'>
+        <h4 style='font-size:14px; font-weight:bold;'>DI Architects</h4>
+        <ul style='list-style:none; padding:0; font-size:12px; line-height:1.5;'>
+<li><a href="#" class="sidebar-link" data-name="Alejandro Rodriguez"><b>Alejandro Rodriguez</b></a>, NetSec (Houston, TX)</li>
+<li><a href="#" class="sidebar-link" data-name="Arnaud Gandibleux"><b>Arnaud Gandibleux</b></a>, Datacenter (Edmonton, AB)</li>
+<li><a href="#" class="sidebar-link" data-name="Bill Jones"><b>Bill Jones</b></a>, Datacenter (Portland, OR)</li>
+<li><a href="#" class="sidebar-link" data-name="Bob Powell"><b>Bob Powell</b></a>, Datacenter (Minneapolis, MN)</li>
+<li><a href="#" class="sidebar-link" data-name="Brad Ramsey"><b>Brad Ramsey</b></a>, Datacenter (Montgomery, AL)</li>
+<li><a href="#" class="sidebar-link" data-name="Brandon Pitta"><b>Brandon Pitta</b></a>, Datacenter (Sacramento, CA)</li>
+<li><a href="#" class="sidebar-link" data-name="Bryan May"><b>Bryan May</b></a>, NetSec (Nashville, TN)</li>
+<li><a href="#" class="sidebar-link" data-name="Charles Lan"><b>Charles Lan</b></a>, NetSec (Atlanta, GA)</li>
+<li><a href="#" class="sidebar-link" data-name="Clement Leung"><b>Clement Leung</b></a>, Datacenter (Toronto, ON)</li>
+<li><a href="#" class="sidebar-link" data-name="Colleen Horrigan"><b>Colleen Horrigan</b></a>, Deployment Services (Houston, TX)</li>
+<li><a href="#" class="sidebar-link" data-name="Danny Corpas"><b>Danny Corpas</b></a>, Datacenter (New York, NY)</li>
+<li><a href="#" class="sidebar-link" data-name="Darren Livingston"><b>Darren Livingston</b></a>, Datacenter (Toronto, ON)</li>
+<li><a href="#" class="sidebar-link" data-name="David Harlow"><b>David Harlow</b></a>, Datacenter (Nashville, TN)</li>
+<li><a href="#" class="sidebar-link" data-name="David Phillips"><b>David Phillips</b></a>, Deployment Services (Minneapolis, MN)</li>
+<li><a href="#" class="sidebar-link" data-name="Dean Michaels"><b>Dean Michaels</b></a>, Datacenter (Edmonton, AB)</li>
+<li><a href="#" class="sidebar-link" data-name="Derek Beatty"><b>Derek Beatty</b></a>, Datacenter (Ottawa, ON)</li>
+<li><a href="#" class="sidebar-link" data-name="Drew Moore"><b>Drew Moore</b></a>, NetSec (Atlanta, GA)</li>
+<li><a href="#" class="sidebar-link" data-name="Dustin Bateman"><b>Dustin Bateman</b></a>, Deployment Services (Baltimore, MD)</li>
+<li><a href="#" class="sidebar-link" data-name="Eric Cardinal"><b>Eric Cardinal</b></a>, NetSec (Seattle, WA)</li>
+<li><a href="#" class="sidebar-link" data-name="Gary Hahn"><b>Gary Hahn</b></a>, NetSec (Detroit, MI)</li>
+<li><a href="#" class="sidebar-link" data-name="George Shearer"><b>George Shearer</b></a>, Datacenter (Cleveland, OH)</li>
+<li><a href="#" class="sidebar-link" data-name="Issam Abdallah"><b>Issam Abdallah</b></a>, NetSec (New York, NY)</li>
+<li><a href="#" class="sidebar-link" data-name="Jenny Neuman"><b>Jenny Neuman</b></a>, Datacenter (Edmonton, AB)</li>
+<li><a href="#" class="sidebar-link" data-name="Jimmy Grondin"><b>Jimmy Grondin</b></a>, Datacenter (Montreal, QC)</li>
+<li><a href="#" class="sidebar-link" data-name="John Liang"><b>John Liang</b></a>, NetSec (San Jose, CA)</li>
+<li><a href="#" class="sidebar-link" data-name="Justin Doster"><b>Justin Doster</b></a>, Datacenter (Tampa, FL)</li>
+<li><a href="#" class="sidebar-link" data-name="Keith Costello"><b>Keith Costello</b></a>, Datacenter (Detroit, MI)</li>
+<li><a href="#" class="sidebar-link" data-name="Mark Farhoomand"><b>Mark Farhoomand</b></a>, NetSec (San Diego, CA)</li>
+<li><a href="#" class="sidebar-link" data-name="Michael Peel"><b>Michael Peel</b></a>, Datacenter (Dallas, TX)</li>
+<li><a href="#" class="sidebar-link" data-name="Michael Westerfield"><b>Michael Westerfield</b></a>, NetSec (Savannah, GA)</li>
+<li><a href="#" class="sidebar-link" data-name="Nathan Moore"><b>Nathan Moore</b></a>, Deployment Services (Houston, TX)</li>
+<li><a href="#" class="sidebar-link" data-name="Pat Zurica"><b>Pat Zurica</b></a>, Datacenter (Columbia, SC)</li>
+<li><a href="#" class="sidebar-link" data-name="Paul Bharucha"><b>Paul Bharucha</b></a>, Datacenter (Raleigh, NC)</li>
+<li><a href="#" class="sidebar-link" data-name="Paul Coe"><b>Paul Coe</b></a>, Datacenter (Minneapolis, MN)</li>
+<li><a href="#" class="sidebar-link" data-name="Peter Graves"><b>Peter Graves</b></a>, Datacenter (Minneapolis, MN)</li>
+<li><a href="#" class="sidebar-link" data-name="Ransi Jona"><b>Ransi Jona</b></a>, Datacenter (Toronto, ON)</li>
+<li><a href="#" class="sidebar-link" data-name="Rick Davies"><b>Rick Davies</b></a>, Datacenter (Atlanta, GA)</li>
+<li><a href="#" class="sidebar-link" data-name="Rob Wolfson"><b>Rob Wolfson</b></a>, NetSec (Houston, TX)</li>
+<li><a href="#" class="sidebar-link" data-name="Ryan Ollenburger"><b>Ryan Ollenburger</b></a>, NetSec (San Jose, CA)</li>
+<li><a href="#" class="sidebar-link" data-name="Sam Jawo"><b>Sam Jawo</b></a>, Datacenter (New York, NY)</li>
+<li><a href="#" class="sidebar-link" data-name="Steve Garnjobst"><b>Steve Garnjobst</b></a>, NetSec (Minneapolis, MN)</li>
+<li><a href="#" class="sidebar-link" data-name="Susette Walsh"><b>Susette Walsh</b></a>, Datacenter (Minneapolis, MN)</li>
+<li><a href="#" class="sidebar-link" data-name="Sylvain Mony"><b>Sylvain Mony</b></a>, Datacenter (Montreal, QC)</li>
+<li><a href="#" class="sidebar-link" data-name="Taelor Ellenbecker"><b>Taelor Ellenbecker</b></a>, Datacenter (Madison, WI)</li>
+<li><a href="#" class="sidebar-link" data-name="Tim Freeman"><b>Tim Freeman</b></a>, Datacenter (Tampa, FL)</li>
+<li><a href="#" class="sidebar-link" data-name="Tim Williams"><b>Tim Williams</b></a>, Datacenter (Madison, WI)</li>
+<li><a href="#" class="sidebar-link" data-name="Tracey Schafer"><b>Tracey Schafer</b></a>, Deployment Services (Philadelphia, PA)</li>
+</ul>
+    </div>
+    <div id="map" style="height:100%;"></div>
+    <script>
+        var map = L.map("map", {
+            center: [39.8283, -98.5795],
+            zoom: 5,
+            zoomControl: false // Disable default zoom control
+        });
+
+        // Add custom zoom control in the top-right
+        L.control.zoom({ position: "topright" }).addTo(map);
+
+        // Add tile layer
+        L.tileLayer(
+            "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+            { attribution: "&copy; OpenStreetMap contributors" }
+        ).addTo(map);
+
+        // Add markers with updated popups
+        var markers = [
+{
+        coords: [29.7604, -95.3698],
+        city: "Houston, TX",
+        people: [{'name': 'Alejandro Rodriguez', 'role': 'NetSec'}, {'name': 'Colleen Horrigan', 'role': 'Deployment Services'}, {'name': 'Nathan Moore', 'role': 'Deployment Services'}, {'name': 'Rob Wolfson', 'role': 'NetSec'}]
+    },
+{
+        coords: [53.5461, -113.4938],
+        city: "Edmonton, AB",
+        people: [{'name': 'Arnaud Gandibleux', 'role': 'Datacenter'}, {'name': 'Dean Michaels', 'role': 'Datacenter'}, {'name': 'Jenny Neuman', 'role': 'Datacenter'}]
+    },
+{
+        coords: [45.5122, -122.6587], // Coordinates for Portland, OR
+        city: "Portland, OR",
+        people: [{'name': 'Bill Jones', 'role': 'Datacenter'}]
+    },
+{
+        coords: [44.9778, -93.265],
+        city: "Minneapolis, MN",
+        people: [{'name': 'Bob Powell', 'role': 'Datacenter'}, {'name': 'David Phillips', 'role': 'Deployment Services'}, {'name': 'Paul Coe', 'role': 'Datacenter'}, {'name': 'Peter Graves', 'role': 'Datacenter'}, {'name': 'Steve Garnjobst', 'role': 'NetSec'}, {'name': 'Susette Walsh', 'role': 'Datacenter'}]
+    },
+{
+        coords: [32.3792, -86.3077],
+        city: "Montgomery, AL",
+        people: [{'name': 'Brad Ramsey', 'role': 'Datacenter'}]
+    },
+{
+        coords: [38.5816, -121.4944],
+        city: "Sacramento, CA",
+        people: [{'name': 'Brandon Pitta', 'role': 'Datacenter'}]
+    },
+{
+        coords: [36.1627, -86.7816],
+        city: "Nashville, TN",
+        people: [{'name': 'Bryan May', 'role': 'NetSec'}, {'name': 'David Harlow', 'role': 'Datacenter'}]
+    },
+{
+        coords: [33.749, -84.388],
+        city: "Atlanta, GA",
+        people: [{'name': 'Charles Lan', 'role': 'NetSec'}, {'name': 'Drew Moore', 'role': 'NetSec'}, {'name': 'Rick Davies', 'role': 'Datacenter'}]
+    },
+{
+        coords: [43.65107, -79.347015],
+        city: "Toronto, ON",
+        people: [{'name': 'Clement Leung', 'role': 'Datacenter'}, {'name': 'Darren Livingston', 'role': 'Datacenter'}, {'name': 'Ransi Jona', 'role': 'Datacenter'}]
+    },
+{coords: [40.7128, -74.006], city: "New York, NY", people: [{'name': 'Danny Corpas', 'role': 'Datacenter'}, {'name': 'Sam Jawo', 'role': 'Datacenter'}, {'name': 'Issam Abdallah', 'role': 'NetSec'}]},
+{
+        coords: [45.4215, -75.6972],
+        city: "Ottawa, ON",
+        people: [{'name': 'Derek Beatty', 'role': 'Datacenter'}]
+    },
+{
+        coords: [39.2904, -76.6122],
+        city: "Baltimore, MD",
+        people: [{'name': 'Dustin Bateman', 'role': 'Deployment Services'}]
+    },
+{
+        coords: [42.3314, -83.0458],
+        city: "Detroit, MI",
+        people: [{'name': 'Gary Hahn', 'role': 'NetSec'}, {'name': 'Keith Costello', 'role': 'Datacenter'}]
+    },
+{
+        coords: [41.4993, -81.6944],
+        city: "Cleveland, OH",
+        people: [{'name': 'George Shearer', 'role': 'Datacenter'}]
+    },
+
+{
+        coords: [45.5017, -73.5673],
+        city: "Montreal, QC",
+        people: [{'name': 'Jimmy Grondin', 'role': 'Datacenter'}, {'name': 'Sylvain Mony', 'role': 'Datacenter'}]
+    },
+{
+        coords: [37.3382, -121.8863],
+        city: "San Jose, CA",
+        people: [{'name': 'John Liang', 'role': 'NetSec'}, {'name': 'Ryan Ollenburger', 'role': 'NetSec'}]
+    },
+{
+        coords: [27.9506, -82.4572],
+        city: "Tampa, FL",
+        people: [{'name': 'Justin Doster', 'role': 'Datacenter'}, {'name': 'Tim Freeman', 'role': 'Datacenter'}]
+    },
+{
+        coords: [32.7157, -117.1611],
+        city: "San Diego, CA",
+        people: [{'name': 'Mark Farhoomand', 'role': 'NetSec'}]
+    },
+{
+        coords: [32.7767, -96.797],
+        city: "Dallas, TX",
+        people: [{'name': 'Michael Peel', 'role': 'Datacenter'}]
+    },
+{
+        coords: [32.0809, -81.0912],
+        city: "Savannah, GA",
+        people: [{'name': 'Michael Westerfield', 'role': 'NetSec'}]
+    },
+{
+        coords: [34.0007, -81.0348],
+        city: "Columbia, SC",
+        people: [{'name': 'Pat Zurica', 'role': 'Datacenter'}]
+    },
+{
+        coords: [35.7796, -78.6382],
+        city: "Raleigh, NC",
+        people: [{'name': 'Paul Bharucha', 'role': 'Datacenter'}]
+    },
+{
+        coords: [43.0731, -89.4012],
+        city: "Madison, WI",
+        people: [{'name': 'Taelor Ellenbecker', 'role': 'Datacenter'}, {'name': 'Tim Williams', 'role': 'Datacenter'}]
+    },
+{
+        coords: [39.9526, -75.1652],
+        city: "Philadelphia, PA",
+        people: [{'name': 'Tracey Schafer', 'role': 'Deployment Services'}]
+    }
+];
+
+
+// Create a mapping between names and markers for quick access
+var nameToMarkerMap = {};
+
+// Initialize markers with popups and add to the map and the name-to-marker map
+markers.forEach(marker => {
+    const popupContent = `<b>${marker.city}</b><br>` + 
+        marker.people.map(person => `${person.name} (${person.role})`).join('<br>');
+
+    const mapMarker = L.marker(marker.coords)
+        .addTo(map)
+        .bindPopup(popupContent);
+
+    // Add each person's name and corresponding marker to the map
+    marker.people.forEach(person => {
+        nameToMarkerMap[person.name] = mapMarker;
+    });
+});
+
+// Add click event handlers to sidebar names
+document.querySelectorAll('.sidebar-link').forEach(link => {
+    link.addEventListener('click', function (e) {
+        e.preventDefault();
+        const name = this.dataset.name; // Get the name from the data attribute
+        const marker = nameToMarkerMap[name]; // Find the corresponding marker
+        if (marker) {
+            map.setView(marker.getLatLng(), 8); // Center the map on the marker
+            marker.openPopup(); // Open the popup
+        }
+    });
+});
+
+
+        markers.forEach(marker => {
+            var popupContent = `<b>${marker.city}</b><br>`;
+            marker.people.forEach(person => {
+                popupContent += `${person.name} (${person.role})<br>`;
+            });
+            L.marker(marker.coords)
+                .addTo(map)
+                .bindPopup(popupContent);
+        });
+    </script>
+</body>
+</html>
