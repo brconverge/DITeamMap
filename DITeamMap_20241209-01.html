@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script>
+        L_NO_TOUCH = false;
+        L_DISABLE_3D = false;
+    </script>
+    <style>
+        html, body {width: 100%; height: 100%; margin: 0; padding: 0;}
+        #map {position: absolute; top: 0; bottom: 0; right: 0; left: 0;}
+        div[style*="position:fixed"] { top: 10px !important; left: 10px !important; width: 400px !important;
+            font-family: Arial, sans-serif; /* Set sidebar font to Arial */
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+</head>
+<body>
+    <div style='position:fixed; top:10px; left:10px; z-index:1000; background:white; padding:10px; max-height:80%; overflow:auto; border:2px solid black; width:300px;'>
+        <h4 style='font-size:14px; font-weight:bold;'>DI Architects</h4>
+        <select id="teamFilter" style="width: 100%; margin-bottom: 10px;">
+            <option value="">All Teams</option>
+            <option value="NetSec">NetSec</option>
+            <option value="Datacenter">Datacenter</option>
+            <option value="Deployment Services">Deployment Services</option>
+        </select>
+        <ul id="sidebar-list" style='list-style:none; padding:0; font-size:12px; line-height:1.5;'>
+            <!-- The list will be populated dynamically -->
+        </ul>
+    </div>
+    <div id="map" style="height:100%;"></div>
+    <script>
+        var map = L.map("map", {
+            center: [39.8283, -98.5795],
+            zoom: 5,
+            zoomControl: false // Disable default zoom control
+        });
+
+        L.control.zoom({ position: "topright" }).addTo(map);
+
+        L.tileLayer(
+            "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+            { attribution: "&copy; OpenStreetMap contributors" }
+        ).addTo(map);
+
+        var markers = [
+            {coords: [47.6062, -122.3321], city: "Seattle, WA", people: [{'name': 'Eric Cardinal', 'role': 'NetSec'}]},
+            {coords: [29.7604, -95.3698], city: "Houston, TX", people: [{'name': 'Alejandro Rodriguez', 'role': 'NetSec'}, {'name': 'Colleen Horrigan', 'role': 'Deployment Services'}, {'name': 'Nathan Moore', 'role': 'Deployment Services'}, {'name': 'Rob Wolfson', 'role': 'NetSec'}]},
+            {coords: [53.5461, -113.4938], city: "Edmonton, AB", people: [{'name': 'Arnaud Gandibleux', 'role': 'Datacenter'}, {'name': 'Dean Michaels', 'role': 'Datacenter'}, {'name': 'Jenny Neuman', 'role': 'Datacenter'}]},
+            {coords: [45.5122, -122.6587], city: "Portland, OR", people: [{'name': 'Bill Jones', 'role': 'Datacenter'}]},
+            {coords: [44.9778, -93.265], city: "Minneapolis, MN", people: [{'name': 'Bob Powell', 'role': 'Datacenter'}, {'name': 'David Phillips', 'role': 'Deployment Services'}, {'name': 'Paul Coe', 'role': 'Datacenter'}, {'name': 'Peter Graves', 'role': 'Datacenter'}, {'name': 'Steve Garnjobst', 'role': 'NetSec'}, {'name': 'Susette Walsh', 'role': 'Datacenter'}]},
+            {coords: [32.3792, -86.3077], city: "Montgomery, AL", people: [{'name': 'Brad Ramsey', 'role': 'Datacenter'}]},
+            {coords: [38.5816, -121.4944], city: "Sacramento, CA", people: [{'name': 'Brandon Pitta', 'role': 'Datacenter'}]},
+            {coords: [36.1627, -86.7816], city: "Nashville, TN", people: [{'name': 'Bryan May', 'role': 'NetSec'}, {'name': 'David Harlow', 'role': 'Datacenter'}]},
+            {coords: [33.749, -84.388], city: "Atlanta, GA", people: [{'name': 'Charles Lan', 'role': 'NetSec'}, {'name': 'Drew Moore', 'role': 'NetSec'}, {'name': 'Rick Davies', 'role': 'Datacenter'}]},
+            {coords: [43.65107, -79.347015], city: "Toronto, ON", people: [{'name': 'Clement Leung', 'role': 'Datacenter'}, {'name': 'Darren Livingston', 'role': 'Datacenter'}, {'name': 'Ransi Jona', 'role': 'Datacenter'}]},
+            {coords: [40.7128, -74.006], city: "New York, NY", people: [{'name': 'Danny Corpas', 'role': 'Datacenter'}, {'name': 'Sam Jawo', 'role': 'Datacenter'}, {'name': 'Issam Abdallah', 'role': 'NetSec'}]},
+            {coords: [45.4215, -75.6972], city: "Ottawa, ON", people: [{'name': 'Derek Beatty', 'role': 'Datacenter'}]},
+            {coords: [39.2904, -76.6122], city: "Baltimore, MD", people: [{'name': 'Dustin Bateman', 'role': 'Deployment Services'}]},
+            {coords: [42.3314, -83.0458], city: "Detroit, MI", people: [{'name': 'Gary Hahn', 'role': 'NetSec'}, {'name': 'Keith Costello', 'role': 'Datacenter'}]},
+            {coords: [41.4993, -81.6944], city: "Cleveland, OH", people: [{'name': 'George Shearer', 'role': 'Datacenter'}]},
+            {coords: [45.5017, -73.5673], city: "Montreal, QC", people: [{'name': 'Jimmy Grondin', 'role': 'Datacenter'}, {'name': 'Sylvain Mony', 'role': 'Datacenter'}]},
+            {coords: [37.3382, -121.8863], city: "San Jose, CA", people: [{'name': 'John Liang', 'role': 'NetSec'}, {'name': 'Ryan Ollenburger', 'role': 'NetSec'}]},
+            {coords: [27.9506, -82.4572], city: "Tampa, FL", people: [{'name': 'Justin Doster', 'role': 'Datacenter'}, {'name': 'Tim Freeman', 'role': 'Datacenter'}]},
+            {coords: [32.7157, -117.1611], city: "San Diego, CA", people: [{'name': 'Mark Farhoomand', 'role': 'NetSec'}]},
+            {coords: [32.7767, -96.797], city: "Dallas, TX", people: [{'name': 'Michael Peel', 'role': 'Datacenter'}]},
+            {coords: [32.0809, -81.0912], city: "Savannah, GA", people: [{'name': 'Michael Westerfield', 'role': 'NetSec'}]},
+            {coords: [34.0007, -81.0348], city: "Columbia, SC", people: [{'name': 'Pat Zurica', 'role': 'Datacenter'}]},
+            {coords: [35.7796, -78.6382], city: "Raleigh, NC", people: [{'name': 'Paul Bharucha', 'role': 'Datacenter'}]},
+            {coords: [43.0731, -89.4012], city: "Madison, WI", people: [{'name': 'Taelor Ellenbecker', 'role': 'Datacenter'}, {'name': 'Tim Williams', 'role': 'Datacenter'}]},
+            {coords: [39.9526, -75.1652], city: "Philadelphia, PA", people: [{'name': 'Tracey Schafer', 'role': 'Deployment Services'}]}
+        ];
+
+        var nameToMarkerMap = {};
+        var markerList = [];
+
+        // Add markers for all cities and populate the global list
+        markers.forEach(marker => {
+            const popupContent = `<b>${marker.city}</b><br>` + 
+                marker.people.map(person => `${person.name} (${person.role})`).join('<br>');
+            
+            const mapMarker = L.marker(marker.coords)
+                .addTo(map)
+                .bindPopup(popupContent);
+
+            marker.people.forEach(person => {
+                markerList.push({
+                    name: person.name,
+                    role: person.role,
+                    city: marker.city,
+                    marker: mapMarker
+                });
+            });
+        });
+
+        function filterMarkers(team) {
+            document.getElementById('sidebar-list').innerHTML = '';
+            const filteredList = markerList
+                .filter(entry => !team || entry.role === team)
+                .sort((a, b) => a.name.localeCompare(b.name));
+
+            filteredList.forEach(entry => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `<a href="#" class="sidebar-link" data-name="${entry.name}"><b>${entry.name}</b></a>, ${entry.role} (${entry.city})`;
+                document.getElementById('sidebar-list').appendChild(listItem);
+
+                listItem.querySelector('a').addEventListener('click', function (e) {
+                    e.preventDefault();
+                    map.setView(entry.marker.getLatLng(), 8);
+                    entry.marker.openPopup();
+                });
+            });
+        }
+
+        document.getElementById('teamFilter').addEventListener('change', function () {
+            const selectedTeam = this.value;
+            filterMarkers(selectedTeam);
+        });
+
+        filterMarkers(''); // Populate the sidebar initially with all markers
+    </script>
+</body>
+</html>
